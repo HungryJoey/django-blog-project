@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="jumbotron bg-primary text-white">
+        <h1 class="display-4">Welcome to Anket's Home Page</h1>
+        <p class="lead">Exploring web development one post at a time</p>
+        <hr class="my-4">
+        <p>Current time: {{ current_time }}</p>
+        <a class="btn btn-light btn-lg" href="{% url 'post_list' %}" role="button">
+            <i class="fas fa-book-open"></i> Read Latest Posts
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <h2><i class="fas fa-newspaper"></i> Recent Posts</h2>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h3 class="card-title">Sample Blog Post</h3>
+                    <p class="card-text">This is a brief excerpt from a blog post...</p>
+                    <a href="#" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
+            <!-- Add more post cards here -->
+        </div>
+        <div class="col-md-4">
+            <h2><i class="fas fa-user"></i> About Me</h2>
+            <p>I'm a passionate web developer exploring the world of Django and Python.</p>
+            <a href="{% url 'about' %}" class="btn btn-outline-primary">Learn More</a>
+            
+            <h3 class="mt-4"><i class="fas fa-quote-left"></i> Quote of the Day</h3>
+            <blockquote class="blockquote">
+                <p class="mb-0">{{ random_quote }}</p>
+            </blockquote>
+        </div>
+    </div>
+</div>
+{% endblock %}

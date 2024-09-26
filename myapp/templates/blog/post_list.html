@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="mb-4">Blog Posts</h1>
+
+    {% if user.is_authenticated %}
+        <a href="{% url 'post_new' %}" class="btn btn-success mb-3">Create New Post</a>
+    {% else %}
+        <p class="alert alert-info">Please <a href="{% url 'login' %}">log in</a> to create a new post.</p>
+    {% endif %}
+
+    {% for post in posts %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h2 class="card-title"><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+                <p class="card-text">
+                    <small class="text-muted">By {{ post.author.username }} on {{ post.published_date }}</small>
+                </p>
+                <div id="post-content-{{ post.id }}">
+                    {{ post.content|truncatewords:30 }}
+                </div>
+                <button class="btn btn-primary mt-2" id="toggle-button-{{ post.id }}" onclick="toggleContent({{ post.id }})">
+                    Show Full Content
+                </button>
+                <a href="{% url 'post_detail' pk=post.pk %}" class="btn btn-info mt-2">Read More</a>
+                {% if user == post.author %}
+                    <a href="{% url 'post_edit' pk=post.pk %}" class="btn btn-warning mt-2">Edit</a>
+                    <a href="{% url 'post_delete' pk=post.pk %}" class="btn btn-danger mt-2 delete-btn" data-bs-toggle="tooltip" title="Delete this post">Delete</a>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <p class="alert alert-warning">No posts available.</p>
+    {% endfor %}
+{% endblock %}
